@@ -6,7 +6,7 @@ import (
 )
 
 func RegisterRoute(engine *gin.Engine) {
-	engine.GET("/helloWorld", func(context *gin.Context) {
+	engine.GET("/hello-world", func(context *gin.Context) {
 		context.String(http.StatusOK, "Hello World")
 	})
 }
