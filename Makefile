@@ -15,3 +15,6 @@ run:
 clean:
 	$(GOCLEAN)
 	rm -rf bin/
+
+test:
+	go test ./...
