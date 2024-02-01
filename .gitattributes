@@ -1,1 +1,1 @@
-hooks/* export-ignore
+.git/hooks/ export-subst
