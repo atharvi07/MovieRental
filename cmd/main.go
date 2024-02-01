@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"movie_rental/internal/app/route"
 )
 
@@ -9,5 +10,8 @@ func main() {
 	//fmt.Println("Hello World!!")
 	engine := gin.Default()
 	route.RegisterRoute(engine)
-	engine.Run(":8080")
+	err := engine.Run(":8080")
+	if err != nil {
+		log.Printf("Error starting server :  %v", err)
+	}
 }
