@@ -15,6 +15,7 @@ import (
 type MovieService interface {
 	PopulateDatabase()
 	GetMovies(genre string, actor string, year string) ([]dto.MovieData, error)
+	GetMovieById(id string) (dto.MovieData, error)
 }
 
 type movieService struct {
@@ -140,4 +141,14 @@ func (movieService movieService) GetMovies(genre string, actor string, year stri
 	}
 
 	return movies, nil
+}
+
+func (movieService movieService) GetMovieById(movieId string) (dto.MovieData, error) {
+
+	movie, err := movieService.repository.FindMovieById(movieId)
+	if err != nil {
+
+		return dto.MovieData{}, err
+	}
+	return movie, nil
 }

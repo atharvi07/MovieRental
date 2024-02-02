@@ -9,6 +9,7 @@ import (
 
 type MovieHandler interface {
 	GetMovies(ctx *gin.Context)
+	GetMovieById(ctx *gin.Context)
 }
 
 type movieHandler struct {
@@ -34,9 +35,28 @@ func (movieHandler movieHandler) GetMovies(ctx *gin.Context) {
 		ctx.Status(http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("response ", movies)
 	ctx.JSON(http.StatusOK, gin.H{
 		"totalResults": len(movies),
 		"data":         movies,
 	})
+}
+
+func (movieHandler movieHandler) GetMovieById(ctx *gin.Context) {
+	movieId := ctx.Param("movieId")
+
+	movie, err := movieHandler.movieService.GetMovieById(movieId)
+	if err != nil {
+
+		fmt.Println("Error Logged : ", err.Error())
+		if err.Error() == "invalid id passed" {
+			ctx.String(http.StatusBadRequest, err.Error())
+		}
+		ctx.Status(http.StatusInternalServerError)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"data": movie,
+	})
+
 }

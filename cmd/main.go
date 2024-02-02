@@ -13,4 +13,10 @@ func main() {
 	if err != nil {
 		log.Printf("Error starting server :  %v", err)
 	}
+
 }
+
+//
+//func populateDb() {
+//	init.PopulateDB()
+//}

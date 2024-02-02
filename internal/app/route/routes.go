@@ -13,8 +13,6 @@ import (
 func RegisterRoute(engine *gin.Engine) {
 
 	dbConn := db.CreateConnection()
-	dbInit := db.NewDbInit(dbConn)
-	dbInit.IntializeDb()
 
 	movieRepo := repository.NewMovieRepo(dbConn)
 
@@ -30,6 +28,7 @@ func RegisterRoute(engine *gin.Engine) {
 	group := engine.Group("/movieRental/api/v1")
 	{
 		group.GET("/movies", movieHandler.GetMovies)
+		group.GET("/movie/:movieId", movieHandler.GetMovieById)
 
 	}
 
