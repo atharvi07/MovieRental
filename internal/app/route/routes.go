@@ -19,12 +19,19 @@ func RegisterRoute(engine *gin.Engine) {
 	movieRepo := repository.NewMovieRepo(dbConn)
 
 	movieService := service.NewMovieService(movieRepo)
-	movieService.PopulateDatabase()
+	//movieService.PopulateDatabase()
 
-	handler.NewMovieHandler(movieService)
+	movieHandler := handler.NewMovieHandler(movieService)
 
 	engine.GET("/hello-world", func(context *gin.Context) {
 		context.String(http.StatusOK, "Hello World")
 	})
+
+	group := engine.Group("/movieRental/api/v1")
+	{
+		group.GET("/movies", movieHandler.GetMovies)
+
+	}
+
 	fmt.Println("Application Running on 8080")
 }

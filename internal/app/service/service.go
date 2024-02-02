@@ -14,6 +14,7 @@ import (
 
 type MovieService interface {
 	PopulateDatabase()
+	GetMovies(genre string, actor string, year string) ([]dto.MovieData, error)
 }
 
 type movieService struct {
@@ -153,4 +154,13 @@ func (movieService movieService) getMovieDetailsFromOmdbService(imdbId string, w
 
 	dataChannel <- movieData
 
+}
+
+func (movieService movieService) GetMovies(genre string, actor string, year string) ([]dto.MovieData, error) {
+	movies, err := movieService.repository.FindMovies(genre, actor, year)
+	if err != nil {
+		return []dto.MovieData{}, err
+	}
+
+	return movies, nil
 }
