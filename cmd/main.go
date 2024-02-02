@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	//fmt.Println("Hello World!!")
 	engine := gin.Default()
 	route.RegisterRoute(engine)
 	err := engine.Run(":8080")

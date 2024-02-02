@@ -34,10 +34,6 @@ func (movieService movieService) PopulateDatabase() {
 }
 
 func (movieService movieService) fetchAndSaveMovieData() {
-	/*
-		https://www.omdbapi.com/?apikey=22b7636d&y=2024&s=Movie&page=1&type=Movie
-		https://www.omdbapi.com/?apikey=22b7636d&y=2024&i=imbd&page=1&type=Movie
-	*/
 	var baseUrl = "https://www.omdbapi.com"
 	var apiKey = "22b7636d"
 	var pageNumber = "1"
@@ -46,29 +42,21 @@ func (movieService movieService) fetchAndSaveMovieData() {
 	searchMovieData := movieService.getSearchMovieData(searchUrl, pageNumber)
 
 	totalResults, _ := strconv.Atoi(searchMovieData.TotalResults)
-	var noOfPages = totalResults / 10 //34 -> 3 ... 1 ..3
-	var remainder = totalResults % 10 // 4
+	var noOfPages = totalResults / 10
+	var remainder = totalResults % 10
 
 	if remainder > 0 {
-		noOfPages++ // 4 ... 1..4 // 4-1
+		noOfPages++
 	}
-
-	//var wg sync.WaitGroup
-	//wg.Add(noOfPages - 1)
 
 	for i := 2; i <= noOfPages; i++ {
 		pageNumber = strconv.Itoa(i)
 		go movieService.getSearchMovieData(searchUrl, pageNumber)
 	}
-	//wg.Wait()
 
 }
 
 func (movieService movieService) getSearchMovieData(searchUrl string, pageNumber string) dto.SearchMovieData {
-
-	//defer wg.Done()
-
-	//fmt.Println(searchUrl)
 
 	response, err := http.Get(searchUrl + pageNumber)
 
@@ -82,9 +70,6 @@ func (movieService movieService) getSearchMovieData(searchUrl string, pageNumber
 		return dto.SearchMovieData{}
 	}
 
-	//fmt.Println("Response status: ", response.StatusCode)
-	//fmt.Println("Response body: ", string(body))
-
 	var searchMovieData dto.SearchMovieData
 	err = json.Unmarshal(body, &searchMovieData)
 
@@ -92,7 +77,6 @@ func (movieService movieService) getSearchMovieData(searchUrl string, pageNumber
 		fmt.Println("Parsing error : ", err)
 		log.Fatal(err)
 	}
-	//fmt.Println("SearchMovieData :", searchMovieData)
 
 	movieService.fetchMovieDataFromOmdbAndSaveData(searchMovieData)
 
@@ -107,7 +91,6 @@ func (movieService movieService) fetchMovieDataFromOmdbAndSaveData(searchMovieDa
 	dataChannel := make(chan dto.MovieData)
 	var movies []dto.MovieData
 	for _, detail := range searchMovieData.MovieDetails {
-		//fmt.Println(detail.ImdbID)
 		go movieService.getMovieDetailsFromOmdbService(detail.ImdbID, &wg, dataChannel)
 		movies = append(movies, <-dataChannel)
 	}
@@ -116,21 +99,18 @@ func (movieService movieService) fetchMovieDataFromOmdbAndSaveData(searchMovieDa
 
 	fmt.Println("Movies : ", movies)
 
-	// savebulk for every page
 	movieService.repository.SaveMovies(movies)
 }
 
 func (movieService movieService) getMovieDetailsFromOmdbService(imdbId string, wg *sync.WaitGroup, dataChannel chan dto.MovieData) {
-	/*
-		https://www.omdbapi.com/?apikey=22b7636d&i=tt1674782
-	*/
+
 	defer wg.Done()
 
 	var baseUrl = "https://www.omdbapi.com"
 	var apiKey = "22b7636d"
 
 	var movieDetailUrl = baseUrl + "/?apikey=" + apiKey + "&i=" + imdbId
-	//fmt.Println(movieDetailUrl)
+
 	response, err := http.Get(movieDetailUrl)
 	if err != nil {
 		return
@@ -141,9 +121,6 @@ func (movieService movieService) getMovieDetailsFromOmdbService(imdbId string, w
 		fmt.Println("Error reading response body:", err)
 		return
 	}
-
-	//fmt.Println("Response status: ", response.StatusCode)
-	//fmt.Println("Response body: ", string(body))
 
 	var movieData dto.MovieData
 	err = json.Unmarshal(body, &movieData)

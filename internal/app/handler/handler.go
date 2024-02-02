@@ -23,9 +23,6 @@ func NewMovieHandler(movieService service.MovieService) MovieHandler {
 
 func (movieHandler movieHandler) GetMovies(ctx *gin.Context) {
 
-	/*
-		I want to filter movies by different criteria such as Genre, Actor, Year
-	*/
 	genre := ctx.Query("genre")
 	actor := ctx.Query("actor")
 	year := ctx.Query("year")
@@ -37,6 +34,7 @@ func (movieHandler movieHandler) GetMovies(ctx *gin.Context) {
 		ctx.Status(http.StatusInternalServerError)
 		return
 	}
+	fmt.Println("response ", movies)
 	ctx.JSON(http.StatusOK, gin.H{
 		"totalResults": len(movies),
 		"data":         movies,
