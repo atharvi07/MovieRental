@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
 	"movie_rental/internal/app/dto"
+	"strconv"
 	"strings"
 )
 
@@ -59,48 +59,42 @@ func (movieRepository movieRepository) SaveMovies(movies []dto.MovieData) {
 }
 
 func (movieRepository movieRepository) FindMovies(genre string, actor string, year string) ([]dto.MovieData, error) {
-
-	var queryBuilder strings.Builder
-	/*
-	 */
-	queryBuilder.WriteString("SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster,imdb_rating, imdb_id, movie_type FROM movies m ")
+	query := "SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster, imdb_rating, imdb_id, movie_type FROM movies m"
 
 	conditions := []string{}
+	args := []interface{}{}
+	paramCount := 1
 
 	if genre != "" {
-		conditions = append(conditions, "m.genre LIKE '%"+genre+"%'")
+		conditions = append(conditions, "m.genre LIKE $"+strconv.Itoa(paramCount))
+		args = append(args, "%"+genre+"%")
+		paramCount++
 	}
 
 	if actor != "" {
-		conditions = append(conditions, "m.actors LIKE '%"+actor+"%'")
+		conditions = append(conditions, "m.actors LIKE $"+strconv.Itoa(paramCount))
+		args = append(args, "%"+actor+"%")
+		paramCount++
 	}
 
 	if year != "" {
-		conditions = append(conditions, "m.year = '"+year+"'")
+		conditions = append(conditions, "m.year = $"+strconv.Itoa(paramCount))
+		args = append(args, year)
+		paramCount++
 	}
 
 	if len(conditions) > 0 {
-		queryBuilder.WriteString("WHERE " + strings.Join(conditions, " AND "))
+		query += " WHERE " + strings.Join(conditions, " AND ")
 	}
 
-	queryBuilder.WriteString(";")
+	fmt.Println("Query:", query)
 
-	queryString := queryBuilder.String()
-	fmt.Println("Query : ", queryString)
-
-	rows, err := movieRepository.DB.Query(queryString)
+	rows, err := movieRepository.DB.Query(query, args...)
 	if err != nil {
-		fmt.Println("error occured : ", err)
-		return []dto.MovieData{}, err
+		fmt.Println("Error occurred:", err)
+		return nil, err
 	}
-	defer func(rows *sql.Rows) {
-		err := rows.Close()
-		if err != nil {
-
-			fmt.Println("error occured inside defer : ", err)
-			log.Println(err)
-		}
-	}(rows)
+	defer rows.Close()
 
 	var movies []dto.MovieData
 
@@ -115,16 +109,12 @@ func (movieRepository movieRepository) FindMovies(genre string, actor string, ye
 			&movie.Type,
 		)
 		if err != nil {
-
-			fmt.Println("error occured while row scan : ", err)
-			return []dto.MovieData{}, err
+			fmt.Println("Error occurred while row scan:", err)
+			return nil, err
 		}
-		// Append the scanned movie to the slice
 		movies = append(movies, movie)
 	}
-	if movies == nil {
-		return []dto.MovieData{}, nil
-	}
+
 	return movies, nil
 }
 
