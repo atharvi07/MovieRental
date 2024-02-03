@@ -143,7 +143,6 @@ func (movieRepository movieRepository) FindMovieById(id string) (dto.MovieData, 
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("No rows found in the database.")
 			return dto.MovieData{}, errors.New("invalid id passed")
 		}
 

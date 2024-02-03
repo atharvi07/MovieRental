@@ -46,8 +46,6 @@ func (movieHandler movieHandler) GetMovieById(ctx *gin.Context) {
 
 	movie, err := movieHandler.movieService.GetMovieById(movieId)
 	if err != nil {
-
-		fmt.Println("Error Logged : ", err.Error())
 		if err.Error() == "invalid id passed" {
 			ctx.String(http.StatusBadRequest, err.Error())
 		}
