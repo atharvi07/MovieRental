@@ -2,22 +2,12 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq"
 	"log"
 )
 
-func CreateConnection() *sql.DB {
-	dataSource := fmt.Sprintf(
-		"postgres://%s:%d/%s?user=%s&password=%s&sslmode=disable",
-		"localhost",
-		5432,
-		"postgres",
-		"postgres",
-		"root",
-	)
-	fmt.Println("datasource : ", dataSource)
-	dbConn, err := sql.Open("postgres", dataSource)
+func CreateConnection(dbDriver string, dbSource string) *sql.DB {
+	dbConn, err := sql.Open(dbDriver, dbSource)
 	if err != nil {
 		log.Fatal("unable to open connection with database ", err.Error())
 	}

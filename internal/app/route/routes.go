@@ -1,18 +1,15 @@
 package route
 
 import (
-	"fmt"
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"movie_rental/internal/app/handler"
 	"movie_rental/internal/app/repository"
 	"movie_rental/internal/app/service"
-	"movie_rental/internal/db"
 	"net/http"
 )
 
-func RegisterRoute(engine *gin.Engine) {
-
-	dbConn := db.CreateConnection()
+func RegisterRoute(dbConn *sql.DB, engine *gin.Engine) {
 
 	movieRepo := repository.NewMovieRepo(dbConn)
 
@@ -31,6 +28,4 @@ func RegisterRoute(engine *gin.Engine) {
 		group.GET("/movie/:movieId", movieHandler.GetMovieById)
 
 	}
-
-	fmt.Println("Application Running on 8080")
 }
