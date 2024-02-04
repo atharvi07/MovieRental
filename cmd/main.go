@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"movie_rental/config"
@@ -14,6 +15,13 @@ func main() {
 		log.Fatal("Cannot load app configurations")
 	}
 	dbConn := db.CreateConnection(appConfig.DBDriver, appConfig.DBSource)
+
+	err = db.ApplyMigrations(dbConn)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Migrations applied")
+
 	engine := gin.Default()
 	route.RegisterRoute(dbConn, engine)
 	err = engine.Run(appConfig.ServerAddress)
@@ -21,8 +29,3 @@ func main() {
 		log.Printf("Error starting server :  %v", err)
 	}
 }
-
-//
-//func populateDb() {
-//	init.PopulateDB()
-//}

@@ -5,7 +5,6 @@ type SearchMovieData struct {
 	TotalResults string         `json:"totalResults"`
 }
 
-// Movie represents the structure of a movie in the search results
 type MovieDetails struct {
 	Title  string `json:"Title"`
 	Year   string `json:"Year"`

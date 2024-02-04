@@ -1,28 +1,4 @@
-package db
-
-import (
-	"database/sql"
-	"fmt"
-	"log"
-)
-
-type DbInit interface {
-	IntializeDb()
-}
-
-type dbInit struct {
-	db *sql.DB
-}
-
-func NewDbInit(db *sql.DB) DbInit {
-	return &dbInit{
-		db: db,
-	}
-}
-
-func (dbInit dbInit) IntializeDb() {
-	createTableSQL := `
-CREATE TABLE IF NOT EXISTS movies (
+CREATE TABLE IF NOT EXISTS movie_data (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     year VARCHAR(4),
@@ -49,19 +25,4 @@ CREATE TABLE IF NOT EXISTS movies (
     production VARCHAR(255),
     website VARCHAR(255),
     response VARCHAR(10)
-);
-`
-
-	result, err := dbInit.db.Exec(createTableSQL)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Println("Error getting RowsAffected:", err)
-		return
-	}
-
-	fmt.Printf("RowsAffected: %d\n", rowsAffected)
-}
+    );

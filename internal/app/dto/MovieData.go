@@ -29,7 +29,6 @@ type MovieData struct {
 	Response   string   `json:"Response"`
 }
 
-// Rating represents the structure of the "Ratings" array
 type Rating struct {
 	Source string `json:"Source"`
 	Value  string `json:"Value"`
