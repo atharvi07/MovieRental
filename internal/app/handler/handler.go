@@ -10,6 +10,7 @@ import (
 type MovieHandler interface {
 	GetMovies(ctx *gin.Context)
 	GetMovieById(ctx *gin.Context)
+	AddToCart(ctx *gin.Context)
 }
 
 type movieHandler struct {
@@ -57,4 +58,19 @@ func (movieHandler movieHandler) GetMovieById(ctx *gin.Context) {
 		"data": movie,
 	})
 
+}
+
+func (movieHandler movieHandler) AddToCart(ctx *gin.Context) {
+	movieId := ctx.Param("movieId")
+	err := movieHandler.movieService.AddToCart(movieId)
+	if err != nil {
+		if err.Error() == "invalid id passed" {
+			fmt.Println("Inside invalid id error")
+			ctx.String(http.StatusBadRequest, err.Error())
+		}
+		fmt.Println("Inside internal server error")
+		ctx.Status(http.StatusInternalServerError)
+		return
+	}
+	ctx.JSON(http.StatusOK, movieHandler.movieService.GetCart())
 }

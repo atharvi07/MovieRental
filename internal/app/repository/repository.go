@@ -11,7 +11,7 @@ import (
 
 type MovieRepository interface {
 	FindMovies(genre string, actor string, year string) ([]dto.MovieData, error)
-	FindMovieById(id string) (dto.MovieData, error)
+	FindMovieById(id string) (*dto.MovieData, error)
 }
 
 type movieRepository struct {
@@ -24,7 +24,7 @@ func NewMovieRepo(db *sql.DB) MovieRepository {
 	}
 }
 
-func (movieRepository movieRepository) FindMovies(genre string, actor string, year string) ([]dto.MovieData, error) {
+func (movieRepository *movieRepository) FindMovies(genre string, actor string, year string) ([]dto.MovieData, error) {
 	query := "SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster, imdb_rating, imdb_id, movie_type FROM movie_data m"
 
 	conditions := []string{}
@@ -84,7 +84,7 @@ func (movieRepository movieRepository) FindMovies(genre string, actor string, ye
 	return movies, nil
 }
 
-func (movieRepository movieRepository) FindMovieById(id string) (dto.MovieData, error) {
+func (movieRepository *movieRepository) FindMovieById(id string) (*dto.MovieData, error) {
 
 	row := movieRepository.DB.QueryRow("SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster,imdb_rating, imdb_id, movie_type FROM movie_data m WHERE m.imdb_id = $1", id)
 
@@ -98,14 +98,14 @@ func (movieRepository movieRepository) FindMovieById(id string) (dto.MovieData, 
 		&movie.Type,
 	)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return dto.MovieData{}, errors.New("invalid id passed")
+		if errors.Is(err, sql.ErrNoRows) {
+			return &dto.MovieData{}, errors.New("invalid id passed")
 		}
 
 		fmt.Println("error occurred while row scan : ", err)
-		return dto.MovieData{}, err
+		return &dto.MovieData{}, err
 	}
 
-	return movie, nil
+	return &movie, nil
 
 }

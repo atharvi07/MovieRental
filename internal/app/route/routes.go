@@ -14,7 +14,6 @@ func RegisterRoute(dbConn *sql.DB, engine *gin.Engine) {
 	movieRepo := repository.NewMovieRepo(dbConn)
 
 	movieService := service.NewMovieService(movieRepo)
-	//movieService.PopulateDatabase()
 
 	movieHandler := handler.NewMovieHandler(movieService)
 
@@ -26,6 +25,6 @@ func RegisterRoute(dbConn *sql.DB, engine *gin.Engine) {
 	{
 		group.GET("/movies", movieHandler.GetMovies)
 		group.GET("/movie/:movieId", movieHandler.GetMovieById)
-
+		group.GET("/add-to-cart/:movieId", movieHandler.AddToCart)
 	}
 }
