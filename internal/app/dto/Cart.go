@@ -1,5 +1,5 @@
 package dto
 
 type Cart struct {
-	Movies []MovieData `json:"movies"`
+	Movies []MovieDetails `json:"movies"`
 }

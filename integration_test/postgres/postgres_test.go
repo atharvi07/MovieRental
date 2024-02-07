@@ -98,7 +98,7 @@ func TestFindMovieById(t *testing.T) {
 			return
 		}
 		var response struct {
-			Data dto.MovieData `json:"data"`
+			Data dto.MovieDetails `json:"data"`
 		}
 		if err = json.Unmarshal(body, &response); err != nil {
 			fmt.Println("Unable to parse json")

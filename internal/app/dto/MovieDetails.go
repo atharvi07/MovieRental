@@ -1,6 +1,6 @@
 package dto
 
-type MovieData struct {
+type MovieDetails struct {
 	Id         string
 	Title      string   `json:"Title"`
 	Year       string   `json:"Year"`
@@ -32,4 +32,15 @@ type MovieData struct {
 type Rating struct {
 	Source string `json:"Source"`
 	Value  string `json:"Value"`
+}
+
+type MovieData struct {
+	Id     string
+	Title  string `json:"Title"`
+	Year   string `json:"Year"`
+	Genre  string `json:"Genre"`
+	Actors string `json:"Actors"`
+	Plot   string `json:"Plot"`
+	Poster string `json:"Poster"`
+	ImdbId string `json:"imdbID"`
 }

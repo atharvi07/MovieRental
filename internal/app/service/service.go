@@ -7,7 +7,7 @@ import (
 
 type MovieService interface {
 	GetMovies(genre string, actor string, year string) ([]dto.MovieData, error)
-	GetMovieById(id string) (*dto.MovieData, error)
+	GetMovieById(id string) (*dto.MovieDetails, error)
 	AddToCart(movieID string) error
 	GetCart() dto.Cart
 }
@@ -32,12 +32,12 @@ func (movieService *movieService) GetMovies(genre string, actor string, year str
 	return movies, nil
 }
 
-func (movieService *movieService) GetMovieById(movieId string) (*dto.MovieData, error) {
+func (movieService *movieService) GetMovieById(movieId string) (*dto.MovieDetails, error) {
 
 	movie, err := movieService.repository.FindMovieById(movieId)
 	if err != nil {
 
-		return &dto.MovieData{}, err
+		return &dto.MovieDetails{}, err
 	}
 	return movie, nil
 }

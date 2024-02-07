@@ -11,7 +11,7 @@ import (
 
 type MovieRepository interface {
 	FindMovies(genre string, actor string, year string) ([]dto.MovieData, error)
-	FindMovieById(id string) (*dto.MovieData, error)
+	FindMovieById(id string) (*dto.MovieDetails, error)
 }
 
 type movieRepository struct {
@@ -25,7 +25,7 @@ func NewMovieRepo(db *sql.DB) MovieRepository {
 }
 
 func (movieRepository *movieRepository) FindMovies(genre string, actor string, year string) ([]dto.MovieData, error) {
-	query := "SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster, imdb_rating, imdb_id, movie_type FROM movie_data m"
+	query := "SELECT id, title, year, genre, actors, plot, poster, imdb_id FROM movie_data m"
 
 	conditions := []string{}
 	args := []interface{}{}
@@ -67,12 +67,7 @@ func (movieRepository *movieRepository) FindMovies(genre string, actor string, y
 	for rows.Next() {
 		var movie dto.MovieData
 		err := rows.Scan(
-			&movie.Id,
-			&movie.Title, &movie.Year, &movie.Released,
-			&movie.Genre, &movie.Director, &movie.Writer, &movie.Actors, &movie.Plot,
-			&movie.Language, &movie.Country, &movie.Awards, &movie.Poster,
-			&movie.IMDBRating, &movie.ImdbId,
-			&movie.Type,
+			&movie.Id, &movie.Title, &movie.Year, &movie.Genre, &movie.Actors, &movie.Plot, &movie.Poster, &movie.ImdbId,
 		)
 		if err != nil {
 			fmt.Println("Error occurred while row scan:", err)
@@ -84,11 +79,11 @@ func (movieRepository *movieRepository) FindMovies(genre string, actor string, y
 	return movies, nil
 }
 
-func (movieRepository *movieRepository) FindMovieById(id string) (*dto.MovieData, error) {
+func (movieRepository *movieRepository) FindMovieById(id string) (*dto.MovieDetails, error) {
 
 	row := movieRepository.DB.QueryRow("SELECT id, title, year, released, genre, director, writer, actors, plot, language, country, awards, poster,imdb_rating, imdb_id, movie_type FROM movie_data m WHERE m.imdb_id = $1", id)
 
-	var movie dto.MovieData
+	var movie dto.MovieDetails
 	err := row.Scan(
 		&movie.Id,
 		&movie.Title, &movie.Year, &movie.Released,
@@ -99,11 +94,11 @@ func (movieRepository *movieRepository) FindMovieById(id string) (*dto.MovieData
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return &dto.MovieData{}, errors.New("invalid id passed")
+			return &dto.MovieDetails{}, errors.New("invalid id passed")
 		}
 
 		fmt.Println("error occurred while row scan : ", err)
-		return &dto.MovieData{}, err
+		return &dto.MovieDetails{}, err
 	}
 
 	return &movie, nil

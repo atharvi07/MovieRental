@@ -21,60 +21,24 @@ func TestMovieHandler_GetMovies(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
 		movie2 := dto.MovieData{
-			Id:         "1",
-			Title:      "Untitled Karate Kid Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "13 Dec 2024",
-			Runtime:    "",
-			Genre:      "Action, Drama, Family",
-			Director:   "Jonathan Entwistle",
-			Writer:     "Rob Lieber",
-			Actors:     "Jackie Chan, Ralph Macchio",
-			Plot:       "Plot under wraps.",
-			Language:   "English",
-			Country:    "United States",
-			Awards:     "N/A",
-			Poster:     "N/A",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt1674782",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "1",
+			Title:  "Untitled Karate Kid Movie",
+			Year:   "2024",
+			Genre:  "Action, Drama, Family",
+			Actors: "Jackie Chan, Ralph Macchio",
+			Plot:   "Plot under wraps.",
+			Poster: "N/A",
+			ImdbId: "tt1674782",
 		}
 		movie1 := dto.MovieData{
-			Id:         "2",
-			Title:      "The Garfield Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "24 May 2024",
-			Runtime:    "",
-			Genre:      "Animation, Adventure, Comedy",
-			Director:   "Mark Dindal",
-			Writer:     "Paul A. Kaplan, Mark Torgove, David Reynolds",
-			Actors:     "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
-			Plot:       "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
-			Language:   "English",
-			Country:    "United Kingdom, United States",
-			Awards:     "N/A",
-			Poster:     "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt5779228",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "2",
+			Title:  "The Garfield Movie",
+			Year:   "2024",
+			Genre:  "Animation, Adventure, Comedy",
+			Actors: "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
+			Plot:   "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
+			Poster: "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+			ImdbId: "tt5779228",
 		}
 		mockRepository.On("FindMovies", "", "", "").Return([]dto.MovieData{movie1, movie2}, nil)
 
@@ -96,60 +60,24 @@ func TestMovieHandler_GetMovies(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
 		movie1 := dto.MovieData{
-			Id:         "2",
-			Title:      "The Garfield Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "24 May 2024",
-			Runtime:    "",
-			Genre:      "Animation, Adventure, Comedy",
-			Director:   "Mark Dindal",
-			Writer:     "Paul A. Kaplan, Mark Torgove, David Reynolds",
-			Actors:     "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
-			Plot:       "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
-			Language:   "English",
-			Country:    "United Kingdom, United States",
-			Awards:     "N/A",
-			Poster:     "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt5779228",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "2",
+			Title:  "The Garfield Movie",
+			Year:   "2024",
+			Genre:  "Animation, Adventure, Comedy",
+			Actors: "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
+			Plot:   "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
+			Poster: "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+			ImdbId: "tt5779228",
 		}
 		movie2 := dto.MovieData{
-			Id:         "1",
-			Title:      "Untitled Karate Kid Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "13 Dec 2024",
-			Runtime:    "",
-			Genre:      "Action, Drama, Family",
-			Director:   "Jonathan Entwistle",
-			Writer:     "Rob Lieber",
-			Actors:     "Jackie Chan, Ralph Macchio",
-			Plot:       "Plot under wraps.",
-			Language:   "English",
-			Country:    "United States",
-			Awards:     "N/A",
-			Poster:     "N/A",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt1674782",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "1",
+			Title:  "Untitled Karate Kid Movie",
+			Year:   "2024",
+			Genre:  "Action, Drama, Family",
+			Actors: "Jackie Chan, Ralph Macchio",
+			Plot:   "Plot under wraps.",
+			Poster: "N/A",
+			ImdbId: "tt1674782",
 		}
 		mockRepository.On("FindMovies", "Action", "", "").Return([]dto.MovieData{movie1, movie2}, nil)
 
@@ -184,60 +112,24 @@ func TestMovieHandler_GetMovies(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
 		movie1 := dto.MovieData{
-			Id:         "2",
-			Title:      "The Garfield Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "24 May 2024",
-			Runtime:    "",
-			Genre:      "Animation, Adventure, Comedy",
-			Director:   "Mark Dindal",
-			Writer:     "Paul A. Kaplan, Mark Torgove, David Reynolds",
-			Actors:     "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
-			Plot:       "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
-			Language:   "English",
-			Country:    "United Kingdom, United States",
-			Awards:     "N/A",
-			Poster:     "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt5779228",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "2",
+			Title:  "The Garfield Movie",
+			Year:   "2024",
+			Genre:  "Animation, Adventure, Comedy",
+			Actors: "Hannah Waddingham, Chris Pratt, Nicholas Hoult",
+			Plot:   "Garfield is about to go on a wild outdoor adventure. After an unexpected reunion with his long-lost father - the cat Vic - Garfield and Odie are forced to abandon their pampered life to join Vic in a hilarious, high-stakes heist.",
+			Poster: "https://m.media-amazon.com/images/M/MV5BNzk4ODdiOTEtMTk3YS00MzZmLTgyOWMtYzc1NjgxYWE2MmMyXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
+			ImdbId: "tt5779228",
 		}
 		movie2 := dto.MovieData{
-			Id:         "1",
-			Title:      "Untitled Karate Kid Movie",
-			Year:       "2024",
-			Rated:      "",
-			Released:   "13 Dec 2024",
-			Runtime:    "",
-			Genre:      "Action, Drama, Family",
-			Director:   "Jonathan Entwistle",
-			Writer:     "Rob Lieber",
-			Actors:     "Jackie Chan, Ralph Macchio",
-			Plot:       "Plot under wraps.",
-			Language:   "English",
-			Country:    "United States",
-			Awards:     "N/A",
-			Poster:     "N/A",
-			Ratings:    nil,
-			MetaScore:  "",
-			IMDBRating: "N/A",
-			IMDBVotes:  "",
-			ImdbId:     "tt1674782",
-			Type:       "movie",
-			DVD:        "",
-			BoxOffice:  "",
-			Production: "",
-			Website:    "",
-			Response:   "",
+			Id:     "1",
+			Title:  "Untitled Karate Kid Movie",
+			Year:   "2024",
+			Genre:  "Action, Drama, Family",
+			Actors: "Jackie Chan, Ralph Macchio",
+			Plot:   "Plot under wraps.",
+			Poster: "N/A",
+			ImdbId: "tt1674782",
 		}
 		mockRepository.On("FindMovies", "", "Hannah Waddingham", "").Return([]dto.MovieData{movie1, movie2}, nil)
 
@@ -293,7 +185,7 @@ func TestMovieHandler_GetMovieById(t *testing.T) {
 	t.Run("should return a movie on success of get movie by id ", func(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
-		movie1 := &dto.MovieData{
+		movie1 := &dto.MovieDetails{
 			Id:         "2",
 			Title:      "The Garfield Movie",
 			Year:       "2024",
@@ -339,7 +231,7 @@ func TestMovieHandler_GetMovieById(t *testing.T) {
 			return
 		}
 		var response struct {
-			Data dto.MovieData `json:"data"`
+			Data dto.MovieDetails `json:"data"`
 		}
 		if err = json.Unmarshal(body, &response); err != nil {
 			fmt.Println("Unable to parse json")
@@ -352,7 +244,7 @@ func TestMovieHandler_GetMovieById(t *testing.T) {
 	t.Run("should return bad request error when invalid id passed", func(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
-		mockRepository.On("FindMovieById", "tt57228").Return(&dto.MovieData{}, errors.New("invalid id passed"))
+		mockRepository.On("FindMovieById", "tt57228").Return(&dto.MovieDetails{}, errors.New("invalid id passed"))
 
 		movieService := service.NewMovieService(mockRepository)
 		handler := NewMovieHandler(movieService)
@@ -373,7 +265,7 @@ func TestMovieHandler_AddToCart(t *testing.T) {
 	t.Run("should add a movie to a cart for valid id ", func(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
-		movie1 := &dto.MovieData{
+		movie1 := &dto.MovieDetails{
 			Id:         "2",
 			Title:      "The Garfield Movie",
 			Year:       "2024",
@@ -419,7 +311,7 @@ func TestMovieHandler_AddToCart(t *testing.T) {
 			return
 		}
 		var response struct {
-			Data []dto.MovieData `json:"movies"`
+			Data []dto.MovieDetails `json:"movies"`
 		}
 		if err = json.Unmarshal(body, &response); err != nil {
 			fmt.Println("Unable to parse json")
@@ -432,7 +324,7 @@ func TestMovieHandler_AddToCart(t *testing.T) {
 	t.Run("should return bad request error when invalid id passed", func(t *testing.T) {
 		engine := gin.Default()
 		mockRepository := &mocks.MovieRepository{}
-		mockRepository.On("FindMovieById", "13wdewe").Return(&dto.MovieData{}, errors.New("invalid id passed"))
+		mockRepository.On("FindMovieById", "13wdewe").Return(&dto.MovieDetails{}, errors.New("invalid id passed"))
 
 		movieService := service.NewMovieService(mockRepository)
 		handler := NewMovieHandler(movieService)
